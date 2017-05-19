@@ -36,6 +36,7 @@ fi
 
 function eodp {
 
+echo "Make a text file, encrypt a file, archive a folder and encrypt it!"
 echo -n "Do you want to Encrypt, Decrypt, Modify, need Help, or eXit? "
 read soption
 
@@ -77,7 +78,7 @@ then
 
         		fi
 
-		cat $ctxtf | openssl aes-256-ecb -a -salt -out $otext.txt
+		cat $ctxtf.txt | openssl aes-256-ecb -a -salt -out $otext.txt
 
 		toview
 
@@ -281,7 +282,7 @@ then
 	echo " "
 	echo "[2] This program uses strong AES-256 encryption, so if you lose the key(password) then you've lost the file, please keep that in mind."
 	echo " "
-	echo "[3] For menus you can type e.g. y, Y, yes, or Yes."
+	echo "[3] For menus you can type e.g. 'y, Y, yes, or Yes'."
 	echo "This is universal for all prompts."
 	echo " "
 	echo "[4] If you mistype and hit enter, you'll either be taken pack to the previous menu prompt or the root/main menu."
@@ -398,9 +399,9 @@ elif [ $tfonf = f ] || [ $tfonf = F ] || [ $tfonf = file ] || [ $tfonf = File ]
 then
 
         echo -n "What do you want to call it? "
-	read otext
+	read otextf
 
-        openssl aes-256-ecb -a -d -salt -in $text -out $otext
+        openssl aes-256-ecb -a -d -salt -in $text -out $otextf
         tolist
 
         checkiffinished
@@ -449,8 +450,8 @@ echo -n "List your file? "
 if [ $vyt = y ] || [ $vyt = Y ] || [ $vyt = Yes ] || [ $vyt = yes ]
 then
 
-	du -h $otext
-        ls -l | grep $otext
+	du -h $otextf
+        ls -l | grep $otextf
 
 elif [ $vyt = n ] || [ $vyt = N ] || [ $vyt = No ] || [ $vyt = no ]
 then
