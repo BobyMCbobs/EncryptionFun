@@ -2,7 +2,7 @@
 
 ##
 #
-# v1.0
+# v1.1
 #
 # This is a simple text and file encryption program
 # You can encrypt and decrypt [1] text files (made within this program)...
@@ -35,15 +35,15 @@ then
 fi
 
 function eodp {
-
+echo "Welcome to EncFun.sh!"
 echo "Make a text file, encrypt a file, archive a folder and encrypt it!"
-echo -n "Do you want to Encrypt, Decrypt, Modify, need Help, or eXit? "
+echo -n "Do you want to Encrypt, Decrypt, Modify an encrypted text file, need Help, or eXit [E/D/M/H/X]? "
 read soption
 
 if [ $soption = E ] || [ $soption = Encrypt ] || [ $soption = Enc ] || [ $soption = e ] || [ $soption = encrypt ]
 then
 
-	echo -n "Do you want to create a New text file, or encrypt a Currently existing one? "
+	echo -n "Do you want to create a New text file, or encrypt a Currently existing one [N/C]? "
 	read ntfoeno
 
 	if [ $ntfoeno = N ] || [ $ntfoeno = n ] || [ $ntfoeno = new ] || [ $ntfoeno = New ]
@@ -57,7 +57,7 @@ then
 	elif [ $ntfoeno = C ] || [ $ntfoeno = c ] || [ $ntfoeno = current ] || [ $ntfoeno = Current ]
 	then
 
-		echo -n "Is it a Text file, or just a File, or a folder to Archive and encrypt? "
+		echo -n "Is it a Text file, or just a File, or a folder to Archive and encrypt [T/F/A]? "
 		read tfonf
 
 		if [ $tfonf = t ] || [ $tfonf = T ] || [ $tfonf = text ] || [ $tfonf = Text ]
@@ -186,7 +186,7 @@ then
 
 elif [ $soption = D ] || [ $soption = Decrypt ] || [ $soption = Dec ] || [ $soption = d ] || [ $soption = decrypt ]
 then
-	echo -n "Is it a Text file, just a File, or an Archive? "
+	echo -n "Is it a Text file, just a File, or an encrypted Archive [T/F/A]? "
 	read tfonf
 
 	if [ $tfonf = t ] || [ $tfonf = T ] || [ $tfonf = text ] || [ $tfonf = Text ]
@@ -288,15 +288,20 @@ then
 	echo "[4] If you mistype and hit enter, you'll either be taken pack to the previous menu prompt or the root/main menu."
 	echo " "
 	echo "[5] If you want to quit at any time, press Ctrl^C. Keep in mind encFun.sh may leave some left overs such as unencrypted temp files, or corrupt the process if this happens."
+	echo " "
+	echo "[6] You cannot encrypt an existing archive using the 'Archive and Encrypt' function. You must use the 'File' function."
+	echo "Also with using the 'Archive and Encrypt' function, you must have a folder in the working directory to archive. "
+	echo "The format for archives is .tar"
 
 	echo " "
 	echo "Hit enter to return..."
 	read hitentertoreturn
+	echo " "
 	eodp
 
 else
 
-	echo "Please type either 'E' for Encryption, or 'D' or Decryption, 'M' for Modify, 'H' for Help, or 'E' for eXit?"
+	echo "Please type either 'E' for Encryption, or 'D' or Decryption, 'M' for Modify, 'H' for Help, or 'X' for eXit [E/D/M/H/X]?"
 	eodp
 
 fi
@@ -330,7 +335,7 @@ fi
 
 function toview {
 
-echo -n "View your text? "
+echo -n "View your text [Y/n]? "
         read vyt
 
 
@@ -358,7 +363,7 @@ function stxt {
 if [ $tfonf = t ] || [ $tfonf = T ] || [ $tfonf = text ] || [ $tfonf = Text ]
 then
 
-echo -n "Do you want to Decrypt and save it, or just View it? "
+echo -n "Do you want to Decrypt and save it, or just View it [D/V]? "
         read sofd
 
         if [ $sofd = d ] || [ $sofd = D ] || [ $sofd = Decrypt ] || [ $sofd = decrypt ]
@@ -389,7 +394,7 @@ echo -n "Do you want to Decrypt and save it, or just View it? "
                 checkiffinished
 
         else
-		echo "Please type, Yes or No... "
+		echo "Please answer correctly... "
                 stxt
 
         fi
@@ -417,7 +422,7 @@ fi
 
 function ttoview {
 
-echo -n "View your text? "
+echo -n "View your text [Y/n]? "
         read vyt
 
 
@@ -443,7 +448,7 @@ fi
 
 function tolist {
 
-echo -n "List your file? "
+echo -n "List your file [Y/n]? "
         read vyt
 
 
@@ -486,6 +491,8 @@ then
 
 	echo "Encryption complete"
 
+	tarlist
+
 	checkiffinished
 
 else
@@ -506,10 +513,11 @@ then
 	echo "Found $tardec"
 
 	openssl aes-256-ecb -d -a -salt -in $tardec -out .dectmptar.tar
-
+	echo "Decryption complete"
 	tar -xvf .dectmptar.tar
 	echo "Extraction complete"
 	rm .dectmptar.tar
+	checkiffinished
 
 else
 	echo "Could not find $tardec"
@@ -518,11 +526,38 @@ else
 fi
 
 eodp
+
+}
+
+function tarlist {
+
+echo -n "List your file [Y/n]? "
+        read vyt
+
+
+if [ $vyt = y ] || [ $vyt = Y ] || [ $vyt = Yes ] || [ $vyt = yes ]
+then
+
+        du -h $archname
+        ls -l | grep $archname
+
+elif [ $vyt = n ] || [ $vyt = N ] || [ $vyt = No ] || [ $vyt = no ]
+then
+
+        checkiffinished
+
+else
+
+        echo "Please answer: Yes or now... "
+        tolist
+fi
+
+
 }
 
 function rtev {
 
-echo -n "Do you want to keep encryption version?"
+echo -n "Do you want to keep encryption version [Y/n]? "
 read kefv
 
 if [ $kefv = y ] || [ $kefv = Y ] || [ $kefv = Yes ] || [ $kefv = yes ]
