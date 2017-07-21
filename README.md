@@ -13,4 +13,4 @@ Things encrypted in this program, aren’t necessarily required to be decrypted 
 
 If it doesn’t execute run ‘chmod +x encFun.sh’.
 
-To run/use ‘./encFun.sh’ after you navigate into the directory where it is stored.
+To run/use ‘./easyFileCrypt-cli.sh’ after you navigate into the directory where it is stored.
