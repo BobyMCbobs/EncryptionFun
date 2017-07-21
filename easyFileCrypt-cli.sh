@@ -35,7 +35,7 @@ then
 fi
 
 function eodp {
-echo "Welcome to EncFun.sh!"
+echo "Welcome to easyFileCrypt-cli.sh!"
 echo "Make a text file, encrypt a file, archive a folder and encrypt it!"
 echo -n "Do you want to Encrypt, Decrypt, Modify an encrypted text file, need Help, or eXit [E/D/M/H/X]? "
 read soption
